@@ -1,0 +1,4525 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>走れバクシンオー</title>
+<style>
+body{
+	background-color: rgb(220,240,210);
+	padding-top: 40px;
+}
+header{
+	width: 100%;
+	height: 40px;
+	background: rgb(192, 209, 184);
+	padding-left: 10px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	display: flex;
+	align-items: center;
+}
+input.kisopara{
+	width:50px;
+}
+input.rb{
+	cursor: pointer;
+	user-select: none;
+	background: radial-gradient(closest-side,rgb(255,245,255), rgb(235,235,235));
+	border:solid 1px rgb(70, 70, 70);
+	border-radius: 5px;
+}
+input.rb:active{
+	cursor: pointer;
+	background: rgba(0,0,0,0.3);
+	border-radius: 5px;
+}
+#unique_skill_name{
+	background: linear-gradient(to right,#e3ffbc,#F3FBDA,#91ffdc,#7af1f7,#b6d2fd,#98c4f3,#e699ff,#ffb3f6);
+	border: 1px solid rgb(70, 70, 70);
+	border-radius: 6px;
+}
+.targeting_skills_fence_line{
+	margin:8px 0px 8px 0px;
+}
+.btn{
+	cursor: pointer;
+	user-select: none;
+	border: solid 1px rgb(70, 70, 70);
+	border-radius: 5px;
+	padding: 2px;
+}
+.skill_boxed_rare{
+	background: linear-gradient(to right,#fdf5ff,#ffeda5,#ffca4f);
+}
+.skill_boxed_common{
+	background: linear-gradient(to right,#fdf5ff,#E6E5F7,#BBBBD3);
+}
+.white{
+	background: radial-gradient(closest-side,rgb(255,245,255), rgb(235,235,235));
+}
+.green{
+	background: radial-gradient(closest-side,rgb(190,230,55), rgb(135,210,55));
+}
+.blue{
+	background: radial-gradient(closest-side,rgb(35,230,255), rgb(20,165,250));
+}
+.yellow{
+	background: radial-gradient(closest-side,rgb(255,200,40), rgb(255,180,40));
+}
+.red{
+	background: radial-gradient(closest-side,rgb(255,175,175), rgb(245,110,110));
+}
+.purple{
+	background: radial-gradient(closest-side,rgb(220,165,255), rgb(190,120,245));
+}
+img.tar-icon{
+	object-fit:fill; 
+}
+.active{
+	box-shadow: inset 0 3px 5px rgba(0,0,0, 0.5);
+}
+input.koyupara{
+	width:30px;
+}
+img{
+	height:22px;
+	vertical-align: middle;
+}
+table{
+	float:left;
+	width:85%;
+	user-select: none;
+	border-collapse: collapse;
+	font-size:16px;
+}
+table th{
+	background-color: rgb(202, 202, 202);
+	font-weight: normal;
+}
+table td{
+	background-color: rgb(255,255,255);
+}
+table tr:nth-child(odd) td {
+	background-color: rgb(230, 240, 230);
+}
+thead{
+	text-align: center;
+}
+th, tr, td{
+	border: 1px solid;
+}
+#param div{
+	padding-left: 10px;
+	display: inline;
+}
+#main_table .tablesorter-header{
+	cursor: pointer;
+	outline: none;
+}
+div#right_contents{
+	position: fixed;
+	width:13%;
+	height:450px;
+	top: 42px;
+	right: 1%;
+}
+div#right_contents select{
+	width:100%;
+	height:425px;
+}
+div#right_contents div#rank_value{
+	width:100%;
+	height:25px;
+}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/extras/jquery.metadata.min.js"></script>
+</head>
+<body>
+	<header>
+		<div id="select_umamusume_skill_sim">
+			<form name="umaform_skill_sim">
+				<select id="growing_umamusume_skill_sim" onchange="SetUmamusume();">
+					<option hidden>育成ウマ娘を選択</option>
+					<option value="19">アグネスタキオン</option>
+					<option value="20">ウイニングチケット</option>
+					<option value="11">ウオッカ</option>
+					<option value="15">エアグルーヴ</option>
+					<option value="14">エルコンドルパサー</option>
+					<option value="5">オグリキャップ</option>
+					<option value="25">キングヘイロー</option>
+					<option value="13">グラスワンダー</option>
+					<option value="10">ゴールドシップ</option>
+					<option value="2">サイレンススズカ</option>
+					<option value="21">サクラバクシンオー</option>
+					<option value="8">シンボリルドルフ</option>
+					<option value="1">スペシャルウィーク</option>
+					<option value="17">スーパークリーク</option>
+					<option value="6">タイキシャトル</option>
+					<option value="12">ダイワスカーレット</option>
+					<option value="26">テイエムオペラオー</option>
+					<option value="3">トウカイテイオー</option>
+					<option value="29">トウカイテイオー(2期)</option>
+					<option value="24">ナイスネイチャ</option>
+					<option value="22">ハルウララ</option>
+					<option value="28">ビワハヤヒデ</option>
+					<option value="23">マチカネフクキタル</option>
+					<option value="16">マヤノトップガン</option>
+					<option value="4">マルゼンスキー</option>
+					<option value="27">ミホノブルボン</option>
+					<option value="7">メジロマックイーン</option>
+					<option value="30">メジロマックイーン(2期)</option>
+					<option value="18">メジロライアン</option>
+					<option value="9">ライスシャワー</option>
+				</select>
+			</form>
+		</div>
+		<form id="sampleForm">
+			<div id="param">
+				<div>
+					<label><input type="radio" name="star" value="選択肢1" checked>★3~5</label>
+					<label><input type="radio" name="star" value="選択肢2">★1~2</label>
+				</div>
+				<div>
+					<span>スピード</span>
+					<input class="kisopara" type="number" name="speed" min="1" max="1200" step="1" onclick="" value="100" onfocus="this.select();">
+				</div>
+				<div>
+					<span>スタミナ</span>
+					<input class="kisopara" type="number" name="stamina" min="1" max="1200" step="1" onclick="" value="100" onfocus="this.select();">
+				</div>
+				<div>
+					<span>パワー</span>
+					<input class="kisopara" type="number" name="power" min="1" max="1200" step="1" onclick="" value="100" onfocus="this.select();">
+				</div>
+				<div>
+					<span>根性</span>
+					<input class="kisopara" type="number" name="guts" min="1" max="1200" step="1" onclick="" value="100" onfocus="this.select();">
+				</div>
+				<div>
+					<span>賢さ</span>
+					<input class="kisopara" type="number" name="cleverness" min="1" max="1200" step="1" onclick="" value="100" onfocus="this.select();">
+				</div>
+				<div>
+					<span id="unique_skill_name">固有スキル名</span><span>Lv.</span>
+					<input class="koyupara" type="number" name="unique_skill" min="1" max="6" step="1" onclick="" value="1" onfocus="this.select();">
+				</div>
+			</div>
+		</form>
+	</header>
+	<div class="search-area">
+		<form method="get" action="">
+			<div>
+				<label><input type="radio" name="andor" value="OR検索" checked onclick="Orsearch();">OR検索</label>
+				<label><input type="radio" name="andor" value="AND検索" onclick="Andsearch();">AND検索</label>
+				<input type="button" value="全て表示" class="rb" onclick="Resetbutton();">
+			</div>
+		</form>
+	</div>
+	<div id="targeting_skills">
+		<div id="targeting_skills_1" class="targeting_skills_fence_line">
+			<span class="btn skill_boxed_common" data-tar="コモン">コモン</span>
+			<span class="btn skill_boxed_rare" data-tar="レア">レア</span>
+		</div>
+		<div id="targeting_skills_2" class="targeting_skills_fence_line">
+			<span class="btn white" data-tar=" ">共通</span>
+			<span class="btn white" data-tar="短距離">短距離</span>
+			<span class="btn white" data-tar="マイル">マイル</span>
+			<span class="btn white" data-tar="中距離">中距離</span>
+			<span class="btn white" data-tar="長距離">長距離</span>
+			<span class="btn white" data-tar="逃げ">逃げ</span>
+			<span class="btn white" data-tar="先行">先行</span>
+			<span class="btn white" data-tar="差し">差し</span>
+			<span class="btn white" data-tar="追込">追込</span>
+		</div>
+		<div id="targeting_skills_3" class="targeting_skills_fence_line">
+			<span class="btn green" data-tar="緑">緑</span>
+			<span class="btn yellow" data-tar="黄">黄</span>
+			<span class="btn blue" data-tar="青">青</span>
+			<span class="btn red" data-tar="赤">赤</span>
+			<span class="btn purple" data-tar="紫">紫</span>
+		</div>
+		<div id="targeting_skills_4" class="targeting_skills_fence_line">
+			<span class="btn" data-tar="緑速"><img src="img/緑速C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="緑耐"><img src="img/緑耐C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="緑力"><img src="img/緑力C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="緑根"><img src="img/緑根C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="緑賢"><img src="img/緑賢C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="速度"><img src="img/黄速度C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="加速"><img src="img/黄加速C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="視野"><img src="img/黄視野C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="門"><img src="img/黄門C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="道替"><img src="img/黄道替C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="回復"><img src="img/青回復C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="赤速"><img src="img/赤速C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="赤耐"><img src="img/赤耐C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="赤加"><img src="img/赤加C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="赤心"><img src="img/赤心C.png" class="tar-icon"></span>
+			<span class="btn" data-tar="赤視"><img src="img/赤視C.png" class="tar-icon"></span>
+		</div>
+	</div>
+	<table class="tablesorter" id="main_table">
+		<thead>
+			<tr>
+				<th>スキル名</th>
+				<th>説明</th>
+				<th>種類</th>
+				<th>レア度</th>
+				<th>色</th>
+				<th>距離</th>
+				<th>作戦</th>
+				<th style="display: none;">効果</th>
+				<th>査定</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">シューティングスター</td>
+				<td>レース終盤に前の方で相手を抜くと勢いに乗って速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">先頭の景色は譲らない…！</td>
+				<td>最終直線で差を付けて先頭にいるとさらなる脚を使って、速度を上げる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">究極テイオーステップ</td>
+				<td>最終直線で前と差が詰まると華麗な脚取りで速度がすごく上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">紅焔ギア/LP1211-M</td>
+				<td>最終コーナー以降で前の方にいるとギアを変えて加速力が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">勝利の鼓動</td>
+				<td>残り200m地点で前の方にいると道を開いてすごく抜け出しやすくなる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">ヴィクトリーショット！</td>
+				<td>最終コーナーで好位置にいると弾みを付けて加速力が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">貴顕の使命を果たすべく</td>
+				<td>最終コーナーで前の方にいると抜かさせない覚悟を決めて速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">汝、皇帝の神威を見よ</td>
+				<td>レース終盤に3回追い抜くと最終直線で速度がすごく上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ブルーローズチェイサー</td>
+				<td>最終直線で抜け出した時に強い意志を持って速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">不沈艦、抜錨ォッ！</td>
+				<td>レース中間からロングスパートをかけて速度が少しずつ上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">カッティング×DRIVE！</td>
+				<td>残り200mを切って前の方にいると競り合いに強くなり速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ブリリアント・レッドエース</td>
+				<td>レース後半で1番をキープし続ける力を発揮する</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">精神一到何事か成らざらん</td>
+				<td>最終直線で後ろの方から追い抜くと末脚を使って速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">プランチャ☆ガナドール</td>
+				<td>最終直線で余力を持って前にいるとより優位を保ちやすくなる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ブレイズ・オブ・プライド</td>
+				<td>最終コーナーで後ろから追い抜くと女帝たる走りで速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ひらめき☆ランディング</td>
+				<td>最終コーナーで前の方で競り合うと直線で抜け出しやすくなる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">ピュリティオブハート</td>
+				<td>レース中盤で好位置にいる時に持久力が回復する</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">レッツ・アナボリック！</td>
+				<td>レース終盤のコーナーで前の位置につこうとして加速力が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">U=ma2</td>
+				<td>レース後半のコーナーで控えていると持久力が回復する</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">勝利のチケットを、君にッ！</td>
+				<td>最終直線で競り合いに負けない気持ちが湧き、速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">優等生×バクシン=大勝利ッ</td>
+				<td>レース後半に前の方で競り合うとバクシン力（？）を発揮、速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">ワクワククライマックス</td>
+				<td>最終コーナーで後ろの方にいると近くのウマ娘を見て持久力を回復する</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">来ます来てます来させます！</td>
+				<td>レース終盤に前方が詰まるとお告げの力で道を切り開く</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">きっとその先へ…！</td>
+				<td>レース終盤で3番手の時に負けそうになると闘志に火が付き速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">Pride of KING</td>
+				<td>レースを冷静に運ぶことができると残り200mで実力発揮、速度がすごく上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ヴィットーリアに捧ぐ舞踏</td>
+				<td>最終コーナーで前の方で競り合うと王たる輝きで速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">G00 1st.F∞;</td>
+				<td>最終直線までみずから崩れることなく前の方にいると速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">∴win Q.E.D.</td>
+				<td>最終コーナーで前の方で追い抜くと勝利の方程式を導き、速度を上げる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">絶対は、ボクだ</td>
+				<td>最終直線で前の方で追いすがっていると不屈の闘志で速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">最強の名をかけて</td>
+				<td>最終コーナー以降に前めで力が尽きかけ詰められると速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">ハヤテ一文字</td>
+				<td>直線で速度が上がる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">直線巧者</td>
+				<td>直線で速度がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">一陣の風</td>
+				<td>直線で加速力が上がる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">直線加速</td>
+				<td>直線で加速力がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">好転一息</td>
+				<td>直線で持久力が回復する</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">直線回復</td>
+				<td>直線で持久力がわずかに回復する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">弧線のプロフェッサー</td>
+				<td>コーナーが得意になり速度が上がる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">コーナー巧者○</td>
+				<td>コーナーが得意になり速度がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫速度C.png">コーナー巧者×</td>
+				<td>コーナーが苦手になり速度が少し下がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">曲線のソムリエ</td>
+				<td>華麗なコーナーワークで加速力が上がる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">コーナー加速○</td>
+				<td>華麗なコーナーワークで加速力がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫加速C.png">コーナー加速×</td>
+				<td>ぎこちないコーナーワークで加速力が少し下がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">円弧のマエストロ</td>
+				<td>無駄のないコーナリングで持久力が回復する</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">コーナー回復○</td>
+				<td>無駄のないコーナリングで持久力がわずかに回復する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫回復C.png">コーナー回復×</td>
+				<td>無駄の多いコーナリングで持久力が少し減少する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">全身全霊</td>
+				<td>ラストスパートで速度が上がる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">末脚</td>
+				<td>ラストスパートで速度がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄門R.png">コンセントレーション</td>
+				<td>スタートが得意になり出遅れる時間が少なくなる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">門</td>
+				<td>394</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄門C.png">集中力</td>
+				<td>スタートが得意になり出遅れる時間がわずかに少なくなる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">門</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫門C.png">ゲート難</td>
+				<td>スタートが苦手になり出遅れる時間が少し増える</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">門</td>
+				<td>-174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">短距離直線◎</td>
+				<td>直線で速度が少し上る＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">短距離直線○</td>
+				<td>直線で速度がわずかに上る＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">マイル直線◎</td>
+				<td>直線で速度が少し上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">マイル直線○</td>
+				<td>直線で速度がわずかに上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">中距離直線◎</td>
+				<td>直線で速度が少し上がる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">中距離直線○</td>
+				<td>直線で速度がわずかに上がる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">長距離直線◎</td>
+				<td>直線で速度が少し上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">長距離直線○</td>
+				<td>直線で速度がわずかに上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">逃げ直線◎</td>
+				<td>直線で速度が少し上がる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">逃げ直線○</td>
+				<td>直線で速度がわずかに上がる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">先行直線◎</td>
+				<td>直線で速度が少し上がる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">先行直線○</td>
+				<td>直線で速度がわずかに上がる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">差し直線◎</td>
+				<td>直線で速度が少し上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">差し直線○</td>
+				<td>直線で速度がわずかに上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">追込直線◎</td>
+				<td>直線で速度が少し上がる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">追込直線○</td>
+				<td>直線で速度がわずかに上がる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">短距離コーナー◎</td>
+				<td>コーナーで速度が少し上がる＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">短距離コーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">マイルコーナー◎</td>
+				<td>コーナーで速度が少し上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">マイルコーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">中距離コーナー◎</td>
+				<td>コーナーで速度が少し上がる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">中距離コーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">長距離コーナー◎</td>
+				<td>コーナーで速度が少し上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">長距離コーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">逃げコーナー◎</td>
+				<td>コーナーで速度が少し上がる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">逃げコーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">先行コーナー◎</td>
+				<td>コーナーで速度が少し上がる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">先行コーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">差しコーナー◎</td>
+				<td>コーナーで速度が少し上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">差しコーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">追込コーナー◎</td>
+				<td>コーナーで速度が少し上がる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">追込コーナー○</td>
+				<td>コーナーで速度がわずかに上がる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">技巧派</td>
+				<td>コース取りが少しスムーズになる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">加速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">巧みなステップ</td>
+				<td>コース取りがわずかにスムーズになる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">迫る影</td>
+				<td>ラストスパートの直線で加速力が上がる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">加速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">直線一気</td>
+				<td>ラストスパートの直線で加速力がわずかに上がる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">ノンストップガール</td>
+				<td>ラストパートで前が塞がれた時の立ち回りがうまくなる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>334</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">垂れウマ回避</td>
+				<td>ラストパートで前が塞がれた時の立ち回りがわずかにうまくなる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">決意の直滑降</td>
+				<td>下り坂が少し得意になる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">加速</td>
+				<td>367</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">直滑降</td>
+				<td>下り坂がわずかに得意になる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">下校後のスペシャリスト</td>
+				<td>下り坂で疲れにくくなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">下校の楽しみ</td>
+				<td>下り坂でわずかに疲れにくくなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ウマ好み</td>
+				<td>近くにウマ娘がたくさんいると速度がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">遊びはおしまいっ！</td>
+				<td>すぐ後ろにウマ娘が長くいると速度がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">シンパシー</td>
+				<td>シンパシーの心を持つウマ娘が多いレースだと少し能力が上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤耐R.png">逃亡禁止令</td>
+				<td>レース序盤に後ろの方にいると前方のウマ娘が焦る＜短距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">抜け駆け禁止</td>
+				<td>レース序盤に後ろの方にいると前方のウマ娘がわずかに焦る＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">後方釘付</td>
+				<td>レース序盤に前の方にいると後方のウマ娘が少し萎縮する＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">マイルの支配者</td>
+				<td>レース序盤に先頭だと差を広げやすくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">積極策</td>
+				<td>レース序盤に先頭だとわずかに差を広げやすくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">彗眼</td>
+				<td>レース序盤に後ろの方だと疲れにくくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">展開窺い</td>
+				<td>レース序盤に後ろの方だとわずかに疲れにくくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤加R.png">布陣</td>
+				<td>レース序盤に後ろにいると前の動きを鈍くする＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">赤加</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤加C.png">布石</td>
+				<td>レース序盤に後ろにいると前の動きをわずかに鈍くする＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">赤加</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄視野R.png">千里眼</td>
+				<td>レース序盤に観察力が高まり視野を広く持てる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">視野</td>
+				<td>367</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄視野C.png">ホークアイ</td>
+				<td>レース序盤に観察力が高まり視野を少し広く持てる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">視野</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">先手必勝</td>
+				<td>レース序盤で、前に行きやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">加速</td>
+				<td>367</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">先駆け</td>
+				<td>レース序盤でわずかに前に行きやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">先頭プライド</td>
+				<td>レース序盤にわずかに追い抜かれにくくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄道替C.png">危険回避</td>
+				<td>レース序盤に少し囲まれにくくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">道替</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤加C.png">リスタート</td>
+				<td>レース序盤に逃げに失敗した時前がわずかに動揺する＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">赤加</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">余裕綽々</td>
+				<td>レース序盤で疲れにくくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">スタミナキープ</td>
+				<td>レース序盤でわずかに疲れにくくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄道替R.png">注目の踊り子</td>
+				<td>レース序盤にコース取りがうまくなる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>334</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄道替C.png">ポジションセンス</td>
+				<td>レース序盤にコース取りが少しうまくなる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">地固め</td>
+				<td>レース序盤にスキルを多く発動すると加速力がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">鋼の意志</td>
+				<td>レース序盤に前が詰まった時に強い意志を持ち持久力が回復する</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">隠れ蓑</td>
+				<td>レース序盤に前が詰まった時に隠れて持久力がわずかに回復する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">逃げけん制</td>
+				<td>レース序盤に作戦・逃げのウマ娘をけん制してわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">先行けん制</td>
+				<td>レース序盤に作戦・先行のウマ娘をけん制してわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">差しけん制</td>
+				<td>レース序盤に作戦・差しのウマ娘をけん制してわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">追込けん制</td>
+				<td>レース序盤に作戦・追込のウマ娘をけん制してわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">プランX</td>
+				<td>レース中盤に前の方にいると抜かしやすくなる＜短距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">善後策</td>
+				<td>レース中盤に前の方にいるとわずかに抜かしやすくなる＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">圧倒的リード</td>
+				<td>レース中盤に大きく差をつけ先頭だとリードを保ちやすい＜短距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">大きなリード</td>
+				<td>レース中盤に大きく差をつけ先頭だとリードをわずかに保ちやすい＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄道替R.png">準備万全！</td>
+				<td>レース中盤でゴールに向けて準備を整える＜短距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄道替C.png">仕掛け準備</td>
+				<td>レース中盤でゴールに向けて準備を少し整える＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>191</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">様子見</td>
+				<td>レース中盤に後ろの方だとわずかに疲れにくくなる＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">アクセル全開</td>
+				<td>レース中盤に追い抜くと加速力が上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">アクセラレーション</td>
+				<td>レース中盤に追い抜くと加速力がわずかに上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">ギアチェンジ</td>
+				<td>レース中盤に前の方にいると抜かしやすくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ギアシフト</td>
+				<td>レース中盤に前の方にいるとわずかに抜かしやすくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤速R.png">スピードグリード</td>
+				<td>レース中盤に先頭にいると後ろの速度をわずかに奪う＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">スピードイーター</td>
+				<td>レース中盤に先頭にいると後ろの速度をわずかに奪う＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄道替R.png">ライトニングステップ</td>
+				<td>レース中盤に後ろに方にいると囲まれにくくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄道替C.png">イナズマステップ</td>
+				<td>レース中盤に後ろの方にいると少し囲まれにくくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>191</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">キラーチューン</td>
+				<td>レース中盤に前の方だと好位置を取りやすくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">テンポアップ</td>
+				<td>レース中盤に前の方だとわずかに好位置を取りやすくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">切り開く者</td>
+				<td>レース中盤に先頭だと疲れにくくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">前途洋々</td>
+				<td>レース中盤に先頭だとわずかに疲れにくくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤耐R.png">魅惑のささやき</td>
+				<td>レース中盤にすぐ前のウマ娘を戸惑わせる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">ささやき</td>
+				<td>レース中盤にすぐ前のウマ娘をわずかに戸惑わせる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">先陣の心得</td>
+				<td>レース中盤に大きく差をつけ先頭だとリードを保ちやすい＜長距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">リードキープ</td>
+				<td>レース中盤に大きく差をつけ先頭だとリードをわずかに保ちやすい＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤耐R.png">スタミナグリード</td>
+				<td>レース中盤で後ろの方にいると前方の持久力をちょっと奪う＜長距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">スタミナイーター</td>
+				<td>レース中盤で後ろの方にいると前方の持久力をちょっと奪う＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">脱出術</td>
+				<td>レース中盤で前に行きやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">急ぎ足</td>
+				<td>レース中盤でわずかに前に行きやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">再燃焼</td>
+				<td>レース中盤に後ろにいると加速力が上がる＜作戦・逃げ＞&quot;</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">加速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">二の矢</td>
+				<td>レース中盤に後ろにいると加速力がわずかに上がる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">くじけぬ精神</td>
+				<td>レース中盤に後ろの方にいると加速力が少し上がる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">加速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">まき直し</td>
+				<td>レース中盤に後ろの方にいると加速力がわずかに上がる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">加速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">食いしん坊</td>
+				<td>レース中盤に持久力が回復する＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">栄養補給</td>
+				<td>レース中盤に持久力がわずかに回復する＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">レースプランナー</td>
+				<td>レース中盤で疲れにくくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">好位追走</td>
+				<td>レース中盤でわずかに疲れにくくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄視野R.png">大局観</td>
+				<td>レース中盤に観察力が高まり視野を広く持てる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">視野</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄視野C.png">読解力</td>
+				<td>レース中盤に観察力が高まり視野をわずかに広く持てる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">視野</td>
+				<td>94</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">迅速果断</td>
+				<td>レース中盤で速度が上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">位置取り押し上げ</td>
+				<td>レース中盤で速度がわずかに上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">眠れる獅子</td>
+				<td>レース中盤に脚を溜めて疲れにくくなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">後方待機</td>
+				<td>レース中盤に脚を溜めてわずかに疲れにくくなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">尻尾上がり</td>
+				<td>レース中盤にスキルを多く発動すると速度がわずかに上る</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">どこ吹く風</td>
+				<td>レース中盤に囲まれると持久力が回復する</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">ウマ込み冷静</td>
+				<td>レース中盤に囲まれると持久力がわずかに回復する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">不屈の心</td>
+				<td>レース中盤に追い抜かれると持久力が回復する</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">ペースキープ</td>
+				<td>レース中盤に追い抜かれると持久力がわずかに回復する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">アガッてきた！</td>
+				<td>レース中盤に追い抜くと速度が上がる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">ペースアップ</td>
+				<td>レース中盤に追い抜くと速度がわずかに上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">トリック(前)</td>
+				<td>レース中盤に前の方にいると後ろの掛かったウマ娘がわずかに疲れる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">トリック(後)</td>
+				<td>レース中盤に後ろの方にいると前の掛かったウマ娘がわずかに疲れる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">逃げ焦り</td>
+				<td>レース中盤に作戦・逃げのウマ娘を焦らせてわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">先行焦り</td>
+				<td>レース中盤に作戦・先行のウマ娘を焦らせてわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">差し焦り</td>
+				<td>レース中盤に作戦・差しのウマ娘を焦らせてわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">追込焦り</td>
+				<td>レース中盤に作戦・追込のウマ娘を焦らせてわずかに疲れやすくする</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤耐</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">電撃の煌めき</td>
+				<td>レース終盤に後ろの方だとスパートしやすくなる＜短距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">詰め寄り</td>
+				<td>レース終盤に後ろの方だとわずかにスパートしやすくなる＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">豪脚</td>
+				<td>レース終盤に後ろの方だと追い抜く力が上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">上昇気流</td>
+				<td>レース終盤に後ろの方だと追い抜く力がわずかに上がる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤速R.png">独占力</td>
+				<td>レース終盤に後ろの方にいると前の速度を下げる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">束縛</td>
+				<td>レース終盤に後ろの方にいると前の速度をわずかに下げる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤視R.png">奇術師</td>
+				<td>レース終盤で前方のウマ娘の視野が狭くなる＜長距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">赤視</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤視C.png">目くらまし</td>
+				<td>レース終盤で前方のウマ娘の視野が少し狭くなる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">赤視</td>
+				<td>142</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">怒涛の追い上げ</td>
+				<td>レース終盤で追い抜くと速度がわずかに上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">追い上げ</td>
+				<td>レース終盤で追い抜くと速度がわずかに上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤視R.png">幻惑のかく乱</td>
+				<td>レース終盤に前の方にいると後方の視野が少し狭くなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">赤視</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤視C.png">かく乱</td>
+				<td>レース終盤に前の方にいると後方の視野がわずかに狭くなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">赤視</td>
+				<td>94</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">乗り換え上手</td>
+				<td>レース終盤で加速力が上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">加速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">差し切り体勢</td>
+				<td>レース終盤で加速力がわずかに上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">リラックス</td>
+				<td>レース終盤に持久力が回復する＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">小休憩</td>
+				<td>レース終盤に持久力がわずかに回復する＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤耐R.png">八方にらみ</td>
+				<td>レース終盤に他のウマ娘が動揺する＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">赤耐</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤耐C.png">鋭い眼光</td>
+				<td>レース終盤に他のウマ娘がわずかに動揺する＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">赤耐</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄視野R.png">天命士</td>
+				<td>レース終盤に後ろの方にいると視野が広くなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">視野</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄視野C.png">策士</td>
+				<td>レース終盤に後ろの方にいると視野がわずかに広くなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">視野</td>
+				<td>94</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">疾風怒濤</td>
+				<td>レース終盤に追い込み態勢に入り位置を上げる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">仕掛け抜群</td>
+				<td>レース終盤に追い込み態勢に入り位置をわずかに上がる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤速R.png">熱いまなざし</td>
+				<td>レース終盤に目を付けたウマ娘の緊張感が増す＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">赤速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">まなざし</td>
+				<td>レース終盤に目を付けたウマ娘の緊張感がわずかに増す＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">赤速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄道替R.png">レーンの魔術師</td>
+				<td>レース終盤にコース取りがうまくなる</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>334</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄道替C.png">臨機応変</td>
+				<td>レース終盤にコース取りが少しうまくなる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">道替</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">ふり絞り</td>
+				<td>レース終盤にスキルを多く発動すると持久力がわずかに回復する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">逃げためらい</td>
+				<td>レース終盤に作戦・逃げのウマ娘をためらわせて速度をわずかに下げる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">先行ためらい</td>
+				<td>レース終盤に作戦・先行のウマ娘をためらわせて速度をわずかに下げる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">差しためらい</td>
+				<td>レース終盤に作戦・差しのウマ娘をためらわせて速度をわずかに下げる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤速C.png">追込ためらい</td>
+				<td>レース終盤に作戦・追込のウマ娘をためらわせて速度をわずかに下げる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">スリップストリーム</td>
+				<td>前のウマ娘のすぐ後ろに付けると風の抵抗をわずかに受けにくくなる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">登山家</td>
+				<td>上り坂がわずかにうまくなる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">スリーセブン</td>
+				<td>残り距離が777mの時にわずかに元気が出る</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤心C.png">逃げ駆け引き</td>
+				<td>作戦が逃げウマ娘が掛かると落ち着くまで時間がかかる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤心</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤心C.png">先行駆け引き</td>
+				<td>作戦が先行のウマ娘が掛かると落ち着くまで時間がかかる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤心</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤心C.png">差し駆け引き</td>
+				<td>作戦が差しのウマ娘が掛かると落ち着くまで時間がかかる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤心</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/赤心C.png">追込駆け引き</td>
+				<td>作戦が追込のウマ娘が掛かると落ち着くまで時間がかかる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>赤</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">赤心</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">スプリントターボ</td>
+				<td>直線で加速力が上がる＜短距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">スプリントギア</td>
+				<td>直線で加速力がわずかに上がる＜短距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">姉御肌</td>
+				<td>追い抜きが成功しやすくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">負けん気</td>
+				<td>追い抜きがわずかに成功しやすくなる＜マイル＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>マイル</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">神業ステップ</td>
+				<td>左右に動いても疲れにくくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">軽やかステップ</td>
+				<td>左右に動いてもわずかに疲れにくくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">勝利への執念</td>
+				<td>最終コーナーで追い抜かれると差し返しやすくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">食い下がり</td>
+				<td>最終コーナーで追い抜かれるとわずかに差し返しやすくなる＜中距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>中距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">内的体験</td>
+				<td>最終コーナーで内ラチ側にいると速度が上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">内弁慶</td>
+				<td>最終コーナーで内ラチ側にいると速度がわずかに上がる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">クールダウン</td>
+				<td>直線に入ると息を入れて疲れにくくなる＜長距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">深呼吸</td>
+				<td>直線に入ると息を入れてわずかに疲れにくくなる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">火事場のバ鹿力</td>
+				<td>力を出し切ったときに走る気力が復活する＜長距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">別腹タンク</td>
+				<td>力を出し切った時に走る気力がわずかに復活する＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">パス上手</td>
+				<td>追い抜く気持ちが湧きわずかに疲れにくくなる＜長距離＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td>長距離</td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">逃亡者</td>
+				<td>最終コーナーで先頭をキープしやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">加速</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">押し切り準備</td>
+				<td>最終コーナーで先頭をわずかにキープしやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">じゃじゃウマ娘</td>
+				<td>上り坂で疲れにくくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">回復</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">勢い任せ</td>
+				<td>上り坂でわずかに疲れにくくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">スピードスター</td>
+				<td>最終コーナーで抜け出しやすくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">抜け出し準備</td>
+				<td>最終コーナーでわずかに抜け出しやすくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄視野R.png">視界良好！異常なし！</td>
+				<td>左右に移動すると状況を把握して視野が少し広くなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">視野</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄視野C.png">お見通し</td>
+				<td>左右に移動すると状況を把握して視野がわずかに広くなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">視野</td>
+				<td>94</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄加速R.png">努力家</td>
+				<td>追い抜きが少し成功しやすくなる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">加速</td>
+				<td>367</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄加速C.png">がんばり屋</td>
+				<td>追い抜きがわずかに成功しやすくなる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">加速</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">昇り龍</td>
+				<td>最終コーナーで外から追い抜くと速度が上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>559</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">外差し準備</td>
+				<td>最終コーナーで外から追い抜くと速度がわずかに上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">百万バリキ</td>
+				<td>上り坂で速度が上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">十万バリキ</td>
+				<td>上り坂で速度がわずかに上がる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">速度</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/青回復R.png">冷静沈着</td>
+				<td>前が詰まった時に落ち着いて態勢を立て直す＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>青</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/青回復C.png">冷静</td>
+				<td>前が詰まった時に落ち着いて態勢をわずかに立て直す＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>青</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">回復</td>
+				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑力C.png">良バ場◎</td>
+				<td>「良」のバ場状態が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑力C.png">良バ場○</td>
+				<td>「良」のバ場状態が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑力C.png">良バ場×</td>
+				<td>「良」のバ場状態が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑力C.png">道悪◎</td>
+				<td>「稍重」「重」「不良」のバ場状態が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑力C.png">道悪○</td>
+				<td>「稍重」「重」「不良」のバ場状態が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑力C.png">道悪×</td>
+				<td>「稍重」「重」「不良」のバ場状態が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">根幹距離◎</td>
+				<td>根幹距離（400mの倍数）が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">根幹距離○</td>
+				<td>根幹距離（400mの倍数）が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">根幹距離×</td>
+				<td>根幹距離（400mの倍数）が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">非根幹距離◎</td>
+				<td>非根幹距離(400mの倍数以外)が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">非根幹距離○</td>
+				<td>非根幹距離(400mの倍数以外)が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">非根幹距離×</td>
+				<td>非根幹距離（400mの倍数以外）が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">右回り◎</td>
+				<td>右回りコースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">右回り○</td>
+				<td>右回りコースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">右回り×</td>
+				<td>右回りコースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">左回り◎</td>
+				<td>左回りコースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">左回り○</td>
+				<td>左回りコースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">左回り×</td>
+				<td>左回りコースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">内枠得意◎</td>
+				<td>枠番が1~3のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑賢</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">内枠得意○</td>
+				<td>枠番が1~3のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑賢</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑賢C.png">内枠苦手</td>
+				<td>枠番が1~3のレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑賢</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">外枠得意◎</td>
+				<td>枠番が6~8のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">外枠得意○</td>
+				<td>枠番が6~8のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">外枠苦手</td>
+				<td>枠番が6～8のレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/緑謎R.png">スーパーラッキーセブン</td>
+				<td>枠番が7の時に良いことが起きる場合がある</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>334</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑謎C.png">ラッキーセブン</td>
+				<td>枠番が7番の時に少し良いことが起きる場合がある</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">晴れの日◎</td>
+				<td>晴れの日のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">晴れの日○</td>
+				<td>晴れの日のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">曇りの日◎</td>
+				<td>曇りの日のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">曇りの日○</td>
+				<td>曇りの日のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">雨の日◎</td>
+				<td>雨の日のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">雨の日○</td>
+				<td>雨の日のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑根C.png">雨の日×</td>
+				<td>雨の日のレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">雪の日◎</td>
+				<td>雪の日のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">雪の日○</td>
+				<td>雪の日のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">東京レース場◎</td>
+				<td>東京レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">東京レース場○</td>
+				<td>東京レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">東京レース場×</td>
+				<td>東京レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">中山レース場◎</td>
+				<td>中山レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">中山レース場○</td>
+				<td>中山レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">中山レース場×</td>
+				<td>中山レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">阪神レース場◎</td>
+				<td>阪神レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">阪神レース場○</td>
+				<td>阪神レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">阪神レース場×</td>
+				<td>阪神レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">京都レース場◎</td>
+				<td>京都レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">京都レース場○</td>
+				<td>京都レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">京都レース場×</td>
+				<td>京都レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">中京レース場◎</td>
+				<td>中京レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">中京レース場○</td>
+				<td>中京レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">中京レース場×</td>
+				<td>中京レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">札幌レース場◎</td>
+				<td>札幌レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">札幌レース場○</td>
+				<td>札幌レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">札幌レース場×</td>
+				<td>札幌レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">函館レース場◎</td>
+				<td>函館レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">函館レース場○</td>
+				<td>函館レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">函館レース場×</td>
+				<td>函館レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">福島レース場◎</td>
+				<td>福島レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">福島レース場○</td>
+				<td>福島レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">福島レース場×</td>
+				<td>福島レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">新潟レース場◎</td>
+				<td>新潟レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">新潟レース場○</td>
+				<td>新潟レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">新潟レース場×</td>
+				<td>新潟レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">小倉レース場◎</td>
+				<td>小倉レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">小倉レース場○</td>
+				<td>小倉レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">小倉レース場×</td>
+				<td>小倉レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">大井レース場◎</td>
+				<td>大井レース場が得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑耐C.png">大井レース場○</td>
+				<td>大井レース場が少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">大井レース場×</td>
+				<td>大井レース場が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">春ウマ娘◎</td>
+				<td>春のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">春ウマ娘○</td>
+				<td>春のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">春ウマ娘×</td>
+				<td>春のレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">夏ウマ娘◎</td>
+				<td>夏のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">夏ウマ娘○</td>
+				<td>夏のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">夏ウマ娘×</td>
+				<td>夏のレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">秋ウマ娘◎</td>
+				<td>秋のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">秋ウマ娘○</td>
+				<td>秋のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">秋ウマ娘×</td>
+				<td>秋のレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">冬ウマ娘◎</td>
+				<td>冬のレースが得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">冬ウマ娘○</td>
+				<td>冬のレースが少し得意になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">冬ウマ娘×</td>
+				<td>冬のレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑力C.png">対抗意識◎</td>
+				<td>自分と同じ作戦のウマ娘が6人以上だと能力を発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑力C.png">対抗意識○</td>
+				<td>自分と同じ作戦のウマ娘が6人以上だと能力を少し発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑力C.png">引っ込み思案</td>
+				<td>自分と同じ作戦のウマ娘が6人以上だと能力を少し発揮しにくい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑力</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">おひとり様○</td>
+				<td>自分と同じ作戦のウマ娘がいないと能力を少し発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">おひとり様◎</td>
+				<td>自分と同じ作戦のウマ娘がいないと能力を発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">徹底マーク◎</td>
+				<td>1番人気のウマ娘と作戦が同じだと能力を発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑根C.png">徹底マーク○</td>
+				<td>1番人気のウマ娘と作戦が同じだと能力を少し発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑根</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">伏兵◎</td>
+				<td>4番人気以下のレースで能力を発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>174</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">伏兵○</td>
+				<td>4番人気以下のレースで能力を少し発揮しやすい</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑速C.png">一匹狼</td>
+				<td>自分だけが一匹狼の心を持つレースで少し能力が上がる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>129</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">逃げのコツ◎</td>
+				<td>良い位置につきやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">緑賢</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">逃げのコツ○</td>
+				<td>良い位置に少しつきやすくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">緑賢</td>
+				<td>191</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">先行のコツ◎</td>
+				<td>良い位置につきやすくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">緑賢</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">先行のコツ○</td>
+				<td>良い位置に少しつきやすくなる＜作戦・先行＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>先行</td>
+				<td style="display: none;">緑賢</td>
+				<td>191</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">差しのコツ◎</td>
+				<td>良い位置につきやすくなる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">緑賢</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">差しのコツ○</td>
+				<td>良い位置に少しつきやすくなる＜作戦・差し＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>差し</td>
+				<td style="display: none;">緑賢</td>
+				<td>191</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">追込のコツ◎</td>
+				<td>良い位置につきやすくなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">緑賢</td>
+				<td>288</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/緑賢C.png">追込のコツ○</td>
+				<td>良い位置に少しつきやすくなる＜作戦・追込＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>緑</td>
+				<td> </td>
+				<td>追込</td>
+				<td style="display: none;">緑賢</td>
+				<td>191</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫回復C.png">空回り</td>
+				<td>先頭で大きくリードし過ぎると少し疲れてしまいがちになる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫速度C.png">手抜き癖</td>
+				<td>残り200m付近で先頭だと少し油断しがちになる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫速度C.png">あきらめ癖</td>
+				<td>最終直線で最後方付近にいると少しあきらめてしまいがちになる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫回復C.png">バ群嫌い</td>
+				<td>周りを囲まれると持久力が少し減少する</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫回復C.png">坂苦手</td>
+				<td>上り坂で少し疲れてしまいがちになる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">回復</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑耐C.png">小心者</td>
+				<td>1番人気になる事が少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/紫緑速C.png">GⅠ苦手</td>
+				<td>GⅠのレースが少し苦手になる</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>紫</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">緑速</td>
+				<td>#N/A</td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="right_contents">
+		<div><select name="name" id="checked_skills" size="20" multiple ondblclick="removeOption()"></select></div>
+		<div id="rank_value"></div>
+	</div>
+	<script>
+		window.onload = function(){
+			CalcRank();
+			var $formObject = document.getElementById("sampleForm");
+			for(var $i=0; $i<$formObject.length; $i++){
+				$formObject.elements[$i].onkeyup = function(){
+					CalcRank();
+				};
+				$formObject.elements[$i].onchange = function(){
+					CalcRank();
+				};
+			}
+		}
+	</script>
+	<script type="text/javascript">
+	//表を並べ替えるやつ
+		$(document).ready(function(){ 
+			$("#main_table").tablesorter();
+		});
+	</script>
+	<script type="text/javascript">
+	//表中をクリックしたら発火するやつ
+		$("#main_table tr").click(function(){
+			addOption($(this.cells[0]).text(),$(this.cells[8]).text());
+			CalcRank();
+		});
+	</script>
+	<script>
+	//クリックしたスキルをselectタグに配置するやつ
+		function addOption(skill_name,appraisal_value){
+			if(MoveCheck(skill_name) == -1) return;
+			var select = document.getElementById("checked_skills");
+			var option = document.createElement("option");
+
+			option.text = skill_name;
+			option.value = appraisal_value;
+			select.appendChild(option);
+		}
+	</script>
+	<script>
+	//選択したスキルが既に配置されていないかチェックするやつ
+		function MoveCheck(skill_name){
+			if(skill_name == "スキル名") return -1;
+			var options = document.getElementById('checked_skills').options;
+			for(var i = 0; i < options.length; i++){
+				if(options[i].text === skill_name){
+					options[i].selected = true;
+					return -1;
+				}
+			}
+		}
+	</script>
+	<script type="text/javascript">
+	//ダブルクリックで消すやつ
+		function removeOption(){
+			var select = document.getElementById("checked_skills");
+			var option = document.createElement("option");
+			var arr = [];
+			for(var i=0; i<select.length; i++){
+				if(select[i].selected){
+					select[i].remove();
+				}
+			}
+			CalcRank();
+		}
+	</script>
+	<script>
+	//査定値を計算するやつ
+		function CalcRank(){
+			var sum = 0;
+			for(var i=0; i<document.getElementById("checked_skills").length; i++){
+				sum += parseInt(document.getElementById("checked_skills")[i].value,10);
+			}
+			var $formObject = document.getElementById("sampleForm");
+			sum += appraisal_table($formObject.speed.value);
+			sum += appraisal_table($formObject.stamina.value);
+			sum += appraisal_table($formObject.power.value);
+			sum += appraisal_table($formObject.guts.value);
+			sum += appraisal_table($formObject.cleverness.value);
+			sum += UniqueSkill();
+			document.getElementById("rank_value").innerHTML = sum;
+			SetUmamusume()
+		}
+	</script>
+	<script>
+	//5パラメータの数値を査定値で返すやつ
+		function appraisal_table(lv){
+			var exp=[0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20,21,21,22,22,23,23,24,24,25,25,26,27,28,29,29,30,31,32,33,33,34,35,36,37,37,38,39,40,41,41,42,43,44,45,45,46,47,48,49,49,50,51,52,53,53,54,55,56,57,57,58,59,60,61,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,120,121,122,124,125,126,128,129,130,131,133,134,135,137,138,139,141,142,143,144,146,147,148,150,151,152,154,155,156,157,159,160,161,163,164,165,167,168,169,170,172,173,174,176,177,178,180,181,183,184,186,188,189,191,192,194,196,197,199,200,202,204,205,207,208,210,212,213,215,216,218,220,221,223,224,226,228,229,231,232,234,236,237,239,240,242,244,245,247,248,250,252,253,255,256,258,260,261,263,265,267,269,270,272,274,276,278,279,281,283,285,287,288,290,292,294,296,297,299,301,303,305,306,308,310,312,314,315,317,319,321,323,324,326,328,330,332,333,335,337,339,341,342,344,346,348,350,352,354,356,358,360,362,364,366,368,371,373,375,377,379,381,383,385,387,389,392,394,396,398,400,402,404,406,408,410,413,415,417,419,421,423,425,427,429,431,434,436,438,440,442,444,446,448,450,452,455,457,459,462,464,467,469,471,474,476,479,481,483,486,488,491,493,495,498,500,503,505,507,510,512,515,517,519,522,524,527,529,531,534,536,539,541,543,546,548,551,553,555,558,560,563,565,567,570,572,575,577,580,582,585,588,590,593,595,598,601,603,606,608,611,614,616,619,621,624,627,629,632,634,637,640,642,645,647,650,653,655,658,660,663,666,668,671,673,676,679,681,684,686,689,692,694,697,699,702,705,707,710,713,716,719,721,724,727,730,733,735,738,741,744,747,749,752,755,758,761,763,766,769,772,775,777,780,783,786,789,791,794,797,800,803,805,808,811,814,817,819,822,825,828,831,833,836,839,842,845,847,850,853,856,859,862,865,868,871,874,876,879,882,885,888,891,894,897,900,903,905,908,911,914,917,920,923,926,929,932,934,937,940,943,946,949,952,955,958,961,963,966,969,972,975,978,981,984,987,990,993,996,999,1002,1005,1008,1011,1014,1017,1020,1023,1026,1029,1032,1035,1038,1041,1044,1047,1050,1053,1056,1059,1062,1065,1068,1071,1074,1077,1080,1083,1086,1089,1092,1095,1098,1101,1104,1107,1110,1113,1116,1119,1122,1125,1128,1131,1134,1137,1140,1143,1146,1149,1152,1155,1158,1161,1164,1167,1171,1174,1177,1180,1183,1186,1189,1192,1195,1198,1202,1205,1208,1211,1214,1217,1220,1223,1226,1229,1233,1236,1239,1242,1245,1248,1251,1254,1257,1260,1264,1267,1270,1273,1276,1279,1282,1285,1288,1291,1295,1298,1301,1304,1308,1311,1314,1318,1321,1324,1328,1331,1334,1337,1341,1344,1347,1351,1354,1357,1361,1364,1367,1370,1374,1377,1380,1384,1387,1390,1394,1397,1400,1403,1407,1410,1413,1417,1420,1423,1427,1430,1433,1436,1440,1443,1446,1450,1453,1456,1460,1463,1466,1470,1473,1477,1480,1483,1487,1490,1494,1497,1500,1504,1507,1511,1514,1517,1521,1524,1528,1531,1534,1538,1541,1545,1548,1551,1555,1558,1562,1565,1568,1572,1575,1579,1582,1585,1589,1592,1596,1599,1602,1606,1609,1613,1616,1619,1623,1626,1630,1633,1637,1640,1644,1647,1651,1654,1658,1661,1665,1668,1672,1675,1679,1682,1686,1689,1693,1696,1700,1703,1707,1710,1714,1717,1721,1724,1728,1731,1735,1738,1742,1745,1749,1752,1756,1759,1763,1766,1770,1773,1777,1780,1784,1787,1791,1794,1798,1801,1805,1808,1812,1816,1820,1824,1828,1832,1836,1840,1844,1847,1851,1855,1859,1863,1867,1871,1875,1879,1883,1886,1890,1894,1898,1902,1906,1910,1914,1918,1922,1925,1929,1933,1937,1941,1945,1949,1953,1957,1961,1964,1968,1972,1976,1980,1984,1988,1992,1996,2000,2004,2008,2012,2016,2020,2024,2028,2032,2036,2041,2045,2049,2053,2057,2061,2065,2069,2073,2077,2082,2086,2090,2094,2098,2102,2106,2110,2114,2118,2123,2127,2131,2135,2139,2143,2147,2151,2155,2159,2164,2168,2172,2176,2180,2184,2188,2192,2196,2200,2205,2209,2213,2217,2221,2226,2230,2234,2238,2242,2247,2251,2255,2259,2263,2268,2272,2276,2280,2284,2289,2293,2297,2301,2305,2310,2314,2318,2322,2326,2331,2335,2339,2343,2347,2352,2356,2360,2364,2368,2373,2377,2381,2385,2389,2394,2398,2402,2406,2410,2415,2419,2423,2427,2432,2436,2440,2445,2449,2453,2458,2462,2466,2470,2475,2479,2483,2488,2492,2496,2501,2505,2509,2513,2518,2522,2526,2531,2535,2539,2544,2548,2552,2556,2561,2565,2569,2574,2578,2582,2587,2591,2595,2599,2604,2608,2612,2617,2621,2625,2630,2635,2640,2645,2650,2656,2661,2666,2671,2676,2682,2687,2692,2697,2702,2708,2713,2718,2723,2728,2734,2739,2744,2749,2754,2760,2765,2770,2775,2780,2786,2791,2796,2801,2806,2812,2817,2822,2827,2832,2838,2843,2848,2853,2858,2864,2869,2874,2879,2884,2890,2895,2901,2906,2912,2917,2923,2928,2934,2939,2945,2950,2956,2961,2967,2972,2978,2983,2989,2994,3000,3005,3011,3016,3022,3027,3033,3038,3044,3049,3055,3060,3066,3071,3077,3082,3088,3093,3099,3104,3110,3115,3121,3126,3132,3137,3143,3148,3154,3159,3165,3171,3178,3184,3191,3198,3204,3211,3217,3224,3231,3237,3244,3250,3257,3264,3270,3277,3283,3290,3297,3303,3310,3316,3323,3330,3336,3343,3349,3356,3363,3369,3376,3382,3389,3396,3402,3409,3415,3422,3429,3435,3442,3448,3455,3462,3468,3475,3481,3488,3495,3501,3508,3515,3522,3529,3535,3542,3549,3556,3563,3569,3576,3583,3590,3597,3603,3610,3617,3624,3631,3637,3644,3651,3658,3665,3671,3678,3685,3692,3699,3705,3712,3719,3726,3733,3739,3746,3753,3760,3767,3773,3780,3787,3794,3801,3807,3814,3821,3828,3835,3841];
+
+			return (exp[lv]);
+		}
+	</script>
+	<script>
+	//固有スキルの数値を査定値で返すやつ
+		function UniqueSkill(){
+			var $formObject = document.getElementById("sampleForm");
+			var elements = document.getElementsByName("star");
+			if(elements.item(0).checked) return 170*$formObject.unique_skill.value;
+			else return 120*$formObject.unique_skill.value;
+		}
+	</script>
+	<script>
+		function SetUmamusume(){
+			var umanum = Number(document.umaform_skill_sim.growing_umamusume_skill_sim.value);
+            switch(umanum){
+                case 1://スペシャルウィーク
+					document.getElementById("unique_skill_name").innerHTML = "シューティングスター";
+                    break;
+				case 2://サイレンススズカ
+                    document.getElementById("unique_skill_name").innerHTML = "先頭の景色は譲らない…！"
+                    break;
+                case 3://トウカイテイオー
+                    document.getElementById("unique_skill_name").innerHTML = "究極テイオーステップ"
+                    break;
+                case 4://マルゼンスキー
+                    document.getElementById("unique_skill_name").innerHTML = "紅焔ギア/LP1211-M"
+                    break;
+                case 5://オグリキャップ
+                    document.getElementById("unique_skill_name").innerHTML = "勝利の鼓動"
+                    break;
+                case 6://タイキシャトル
+                    document.getElementById("unique_skill_name").innerHTML = "ヴィクトリーショット！"
+                    break;
+                case 7://メジロマックイーン
+                    document.getElementById("unique_skill_name").innerHTML = "貴顕の使命を果たすべく"
+                    break;
+                case 8://シンボリルドルフ
+                    document.getElementById("unique_skill_name").innerHTML = "汝、皇帝の神威を見よ"
+                    break;
+                case 9://ライスシャワー
+                    document.getElementById("unique_skill_name").innerHTML = "ブルーローズチェイサー"
+                    break;
+                case 10://ゴールドシップ
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "不沈艦、抜錨ォッ！"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "波乱注意砲！"
+                    break;
+                case 11://ウオッカ
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "カッティング×DRIVE！"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "アクセルX"
+                    break;
+                case 12://ダイワスカーレット
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "ブリリアント・レッドエース"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "レッドエース"
+                    break;
+                case 13://グラスワンダー
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "精神一到何事か成らざらん"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "精神一到"
+                    break;
+                case 14://エルコンドルパサー
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "プランチャ☆ガナドール"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "熱血☆アミーゴ"
+                    break;
+                case 15://エアグルーヴ
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "ブレイズ・オブ・プライド"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "エンプレス・プライド"
+                    break;
+                case 16://マヤノトップガン
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "ひらめき☆ランディング"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "勝利のキッス☆"
+                    break;
+                case 17://スーパークリーク
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "ピュリティオブハート"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "クリアハート"
+                    break;
+                case 18://メジロライアン
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "レッツ・アナボリック！"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "燃えろ筋肉！"
+                    break;
+                case 19://アグネスタキオン
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "U=ma2"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "introduction:My body"
+                    break;
+                case 20://ウイニングチケット
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "勝利のチケットを、君にッ！"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "全力Vサインッ！"
+                    break;
+                case 21://サクラバクシンオー
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "優等生×バクシン=大勝利ッ"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "学級委員長＋速さ＝バクシン"
+                    break;
+                case 22://ハルウララ
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "ワクワククライマックス"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "ワクワクよーいドン"
+                    break;
+                case 23://マチカネフクキタル
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "来ます来てます来させます！"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "来てください来てください！"
+                    break;
+                case 24://ナイスネイチャ
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "きっとその先へ…！"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "アタシもたまには、ね？"
+                    break;
+                case 25://キングヘイロー
+					if(document.getElementsByName("star").item(0).checked)
+                    	document.getElementById("unique_skill_name").innerHTML = "Pride of KING"
+					else
+						document.getElementById("unique_skill_name").innerHTML = "Call me KING"
+                    break;
+                case 26://テイエムオペラオー
+                    document.getElementById("unique_skill_name").innerHTML = "ヴィットーリアに捧ぐ舞踏"
+                    break;
+                case 27://ミホノブルボン
+                    document.getElementById("unique_skill_name").innerHTML = "G00 1stF∞"
+                    break;
+                case 28://ビワハヤヒデ
+                    document.getElementById("unique_skill_name").innerHTML = "∴win Q.E.D."
+                    break;
+                case 29://トウカイテイオー2
+                    document.getElementById("unique_skill_name").innerHTML = "絶対は、ボクだ"
+                    break;
+                case 30://メジロマックイーン2
+                    document.getElementById("unique_skill_name").innerHTML = "最強の名をかけて"
+                    break;
+                default:
+                    break;
+			}
+		}
+	</script>
+	<script>
+		function Resetbutton(){
+			$("#main_table tr").show();
+			$(".btn").removeClass("active");
+		}
+	</script>
+	<script>
+	//ボタンのやつ
+		$(function(){
+			$(".btn").on("click", function(){
+				$(this).toggleClass("active");
+				if(document.getElementsByName("andor").item(0).checked){
+					Orsearch();
+				}
+				else{
+					Andsearch();
+				}
+			});
+		});
+	</script>
+	<script>
+	//OR検索
+		function Orsearch(){
+			$("#main_table tbody tr").hide();
+			if($("#targeting_skills .active").length < 1){
+				$("#main_table tr").show();
+			}
+			$("#targeting_skills .active").each(function(){
+				var t = this.dataset.tar;
+				$("#main_table tbody tr").each(function(){
+					if(t == "コモン" || t == "レア"){
+						if($(this).find("td:eq(3)").text().match(t) != null){
+							$(this).show();
+						}
+					}
+					if(t == "緑" || t == "黄" || t == "青" || t == "赤" || t == "紫"){
+						if($(this).find("td:eq(4)").text().match(t) != null){
+							$(this).show();
+						}
+					}
+					if(t == " "){
+						if($(this).find("td:eq(5)").text() == " "){
+							if($(this).find("td:eq(6)").text() == " "){
+								$(this).show();
+							}
+						}
+					}
+					if(t == "短距離" || t == "マイル" || t == "中距離" || t == "長距離"){
+						if($(this).find("td:eq(5)").text().match(t) != null){
+							$(this).show();
+						}
+					}
+					if(t == "逃げ" || t == "先行" || t == "差し" || t == "追込"){
+						if($(this).find("td:eq(6)").text().match(t) != null){
+							$(this).show();
+						}
+					}
+					if(t == "緑速" || t == "緑耐" || t == "緑力" || t == "緑根" || t == "緑賢" || t == "速度" || t == "加速" || t == "視野" || t == "門" || t == "道替" || t == "回復" || t == "赤速" || t == "赤耐" || t == "赤加" || t == "赤心" || t == "赤視"){
+						if($(this).find("td:eq(7)").text().match(t) != null){
+							$(this).show();
+						}
+					}
+				});
+			});
+		}
+	</script>
+	<script>
+	//AND検索
+		function Andsearch(){
+			$("#main_table tbody tr").show();
+			var l = [];
+			l[0] = $("#targeting_skills_1 .active").length;
+			l[1] = $("#targeting_skills_2 .active").length;
+			l[2] = $("#targeting_skills_3 .active").length;
+			l[3] = $("#targeting_skills_4 .active").length;
+			if(l[0] > 1 || l[1] > 1 || l[2] > 1 || l[3] > 1){
+				$("#main_table tbody tr").hide();
+				return;
+			}
+
+			$("#main_table tbody tr").removeClass("check1");
+			$("#main_table tbody tr").removeClass("check2");
+			$("#main_table tbody tr").removeClass("check3");
+			$("#main_table tbody tr").removeClass("check4");
+			$("#main_table tbody tr").removeClass("check5");
+
+			$("#targeting_skills .active").each(function(){
+				var t = this.dataset.tar;
+				$("#main_table tbody tr").each(function(){
+					if(t == "コモン" || t == "レア"){
+						if($(this).find("td:eq(3)").text().match(t) != null){
+							$(this).addClass("check1");
+						}
+					}
+					if(t == "緑" || t == "黄" || t == "青" || t == "赤" || t == "紫"){
+						if($(this).find("td:eq(4)").text().match(t) != null){
+							$(this).addClass("check2");
+						}
+					}
+					if(t == " "){
+						if($(this).find("td:eq(5)").text() == " "){
+							if($(this).find("td:eq(6)").text() == " "){
+								$(this).addClass("check3");
+							}
+						}
+					}
+					if(t == "短距離" || t == "マイル" || t == "中距離" || t == "長距離"){
+						if($(this).find("td:eq(5)").text().match(t) != null){
+							$(this).addClass("check3");
+						}
+					}
+					if(t == "逃げ" || t == "先行" || t == "差し" || t == "追込"){
+						if($(this).find("td:eq(6)").text().match(t) != null){
+							$(this).addClass("check4");
+						}
+					}
+					if(t == "緑速" || t == "緑耐" || t == "緑力" || t == "緑根" || t == "緑賢" || t == "速度" || t == "加速" || t == "視野" || t == "門" || t == "道替" || t == "回復" || t == "赤速" || t == "赤耐" || t == "赤加" || t == "赤心" || t == "赤視"){
+						if($(this).find("td:eq(7)").text().match(t) != null){
+							$(this).addClass("check5");
+						}
+					}
+				});
+			});
+			
+			$("#main_table tbody tr").each(function(i){
+				
+				var cls = 0;
+				if($(this).hasClass("check1")) cls++;
+				if($(this).hasClass("check2")) cls++;
+				if($(this).hasClass("check3")) cls++;
+				if($(this).hasClass("check4")) cls++;
+				if($(this).hasClass("check5")) cls++;
+				if($("#targeting_skills .active").length == cls){
+					$(this).show();
+				}
+				else{
+					$(this).hide();
+				}
+				
+			});
+		}
+	</script>
+</body>
+</html>
