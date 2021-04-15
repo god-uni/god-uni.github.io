@@ -143,6 +143,7 @@ div#right_contents div#rank_value{
 					<option value="15">エアグルーヴ</option>
 					<option value="14">エルコンドルパサー</option>
 					<option value="5">オグリキャップ</option>
+					<option value="31">カレンチャン</option>
 					<option value="25">キングヘイロー</option>
 					<option value="13">グラスワンダー</option>
 					<option value="10">ゴールドシップ</option>
@@ -1334,6 +1335,17 @@ div#right_contents div#rank_value{
 				<td>短距離</td>
 				<td> </td>
 				<td style="display: none;">赤耐</td>
+				<td>#N/A</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/赤速R.png">悩殺術</td>
+				<td>レース序盤に前の方にいると後方のウマ娘が萎縮する＜短距離＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>赤</td>
+				<td>短距離</td>
+				<td> </td>
+				<td style="display: none;">赤速</td>
 				<td>#N/A</td>
 			</tr>
 			<tr>
@@ -4368,6 +4380,9 @@ div#right_contents div#rank_value{
                     break;
                 case 30://メジロマックイーン2
                     document.getElementById("unique_skill_name").innerHTML = "最強の名をかけて"
+                    break;
+		case 31://カレンチャン
+                    document.getElementById("unique_skill_name").innerHTML = "#LookatCurren"
                     break;
                 default:
                     break;
