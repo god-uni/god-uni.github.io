@@ -158,6 +158,7 @@ div#right_contents div#rank_value{
 					<option value="3">トウカイテイオー</option>
 					<option value="29">トウカイテイオー(2期)</option>
 					<option value="24">ナイスネイチャ</option>
+					<option value="32">ナリタタイシン</option>
 					<option value="22">ハルウララ</option>
 					<option value="28">ビワハヤヒデ</option>
 					<option value="23">マチカネフクキタル</option>
@@ -603,6 +604,17 @@ div#right_contents div#rank_value{
 			<tr>
 				<td class="skill_boxed_common"><img src="img/黄速度C.png">＃LookatCurren</td>
 				<td>レース中間付近で好位置にいる時に追い抜くと勢いづき進出を開始する</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">Nemesis</td>
+				<td>最終コーナーで集団の後方の位置から前へ出る時、切れ味が増し速度が上がる</td>
 				<td>継承</td>
 				<td>コモン</td>
 				<td>黄</td>
@@ -4167,6 +4179,7 @@ div#right_contents div#rank_value{
 	//表を並べ替えるやつ
 		$(document).ready(function(){ 
 			$("#main_table").tablesorter();
+			Tablecolor();
 		});
 	</script>
 	<script type="text/javascript">
@@ -4394,6 +4407,9 @@ div#right_contents div#rank_value{
                     break;
 		case 31://カレンチャン
                     document.getElementById("unique_skill_name").innerHTML = "＃LookatCurren"
+                    break;
+		case 32://ナリタタイシン
+                    document.getElementById("unique_skill_name").innerHTML = "Nemesis"
                     break;
                 default:
                     break;
