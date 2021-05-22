@@ -151,6 +151,7 @@ div#right_contents div#rank_value{
 					<option value="21">サクラバクシンオー</option>
 					<option value="8">シンボリルドルフ</option>
 					<option value="1">スペシャルウィーク</option>
+					<option value="33">スマートファルコン</option>
 					<option value="17">スーパークリーク</option>
 					<option value="6">タイキシャトル</option>
 					<option value="12">ダイワスカーレット</option>
@@ -159,6 +160,7 @@ div#right_contents div#rank_value{
 					<option value="29">トウカイテイオー(2期)</option>
 					<option value="24">ナイスネイチャ</option>
 					<option value="32">ナリタタイシン</option>
+					<option value="34">ナリタブライアン</option>
 					<option value="22">ハルウララ</option>
 					<option value="28">ビワハヤヒデ</option>
 					<option value="23">マチカネフクキタル</option>
@@ -615,6 +617,28 @@ div#right_contents div#rank_value{
 			<tr>
 				<td class="skill_boxed_common"><img src="img/黄速度C.png">Nemesis</td>
 				<td>最終コーナーで集団の後方の位置から前へ出る時、切れ味が増し速度が上がる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">キラキラ☆STARDOM</td>
+				<td>レース中盤の直線で先頭を奪われそうになると譲らない想いが力になる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度 加速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">Shadow Break</td>
+				<td>最終コーナー以降で外から追い抜くと、怪物的な力で、速度を上げる</td>
 				<td>継承</td>
 				<td>コモン</td>
 				<td>黄</td>
@@ -4410,6 +4434,12 @@ div#right_contents div#rank_value{
                     break;
 		case 32://ナリタタイシン
                     document.getElementById("unique_skill_name").innerHTML = "Nemesis"
+                    break;
+		case 33://スマートファルコン
+                    document.getElementById("unique_skill_name").innerHTML = "キラキラ☆STARDOM"
+                    break;
+		case 34://ナリタブライアン
+                    document.getElementById("unique_skill_name").innerHTML = "Shadow Break"
                     break;
                 default:
                     break;
