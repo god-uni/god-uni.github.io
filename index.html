@@ -141,6 +141,7 @@ div#right_contents div#rank_value{
 					<option value="20">ウイニングチケット</option>
 					<option value="11">ウオッカ</option>
 					<option value="15">エアグルーヴ</option>
+					<option value="36">エアグルーヴ(ビューティー)</option>
 					<option value="14">エルコンドルパサー</option>
 					<option value="5">オグリキャップ</option>
 					<option value="31">カレンチャン</option>
@@ -165,6 +166,7 @@ div#right_contents div#rank_value{
 					<option value="28">ビワハヤヒデ</option>
 					<option value="23">マチカネフクキタル</option>
 					<option value="16">マヤノトップガン</option>
+					<option value="35">マヤノトップガン(ビューティー)</option>
 					<option value="4">マルゼンスキー</option>
 					<option value="27">ミホノブルボン</option>
 					<option value="7">メジロマックイーン</option>
@@ -227,6 +229,7 @@ div#right_contents div#rank_value{
 			<span class="btn white" data-tar="マイル">マイル</span>
 			<span class="btn white" data-tar="中距離">中距離</span>
 			<span class="btn white" data-tar="長距離">長距離</span>
+			<span class="btn white" data-tar="ダート">ダート</span>
 			<span class="btn white" data-tar="逃げ">逃げ</span>
 			<span class="btn white" data-tar="先行">先行</span>
 			<span class="btn white" data-tar="差し">差し</span>
@@ -1528,6 +1531,17 @@ div#right_contents div#rank_value{
 				<td>239</td>
 			</tr>
 			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄道替R.png">シックスセンス</td>
+				<td>レース序盤に囲まれにくくなる＜作戦・逃げ＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>逃げ</td>
+				<td style="display: none;">道替</td>
+				<td>367</td>
+			</tr>
+			<tr>
 				<td class="skill_boxed_common"><img src="img/黄道替C.png">危険回避</td>
 				<td>レース序盤に少し囲まれにくくなる＜作戦・逃げ＞</td>
 				<td>一般</td>
@@ -1944,6 +1958,28 @@ div#right_contents div#rank_value{
 				<td> </td>
 				<td style="display: none;">赤耐</td>
 				<td>239</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_rare"><img src="img/黄速度R.png">チャート急上昇！</td>
+				<td>レース中盤に競り合うと速度が上がる＜ダート＞</td>
+				<td>一般</td>
+				<td>レア</td>
+				<td>黄</td>
+				<td> </td>
+				<td>ダート</td>
+				<td style="display: none;">速度</td>
+				<td>508</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">レコメンド</td>
+				<td>レース中盤に競り合うと速度がわずかに上がる＜ダート＞</td>
+				<td>一般</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td>ダート</td>
+				<td style="display: none;">速度</td>
+				<td>217</td>
 			</tr>
 			<tr>
 				<td class="skill_boxed_rare"><img src="img/黄速度R.png">脱出術</td>
@@ -4493,7 +4529,7 @@ div#right_contents div#rank_value{
 							}
 						}
 					}
-					if(t == "短距離" || t == "マイル" || t == "中距離" || t == "長距離"){
+					if(t == "短距離" || t == "マイル" || t == "中距離" || t == "長距離" || t == "ダート"){
 						if($(this).find("td:eq(5)").text().match(t) != null){
 							$(this).show();
 						}
@@ -4554,7 +4590,7 @@ div#right_contents div#rank_value{
 							}
 						}
 					}
-					if(t == "短距離" || t == "マイル" || t == "中距離" || t == "長距離"){
+					if(t == "短距離" || t == "マイル" || t == "中距離" || t == "長距離" || t == "ダート"){
 						if($(this).find("td:eq(5)").text().match(t) != null){
 							$(this).addClass("check3");
 						}
