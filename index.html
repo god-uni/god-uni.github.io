@@ -141,7 +141,7 @@ div#right_contents div#rank_value{
 					<option value="20">ウイニングチケット</option>
 					<option value="11">ウオッカ</option>
 					<option value="15">エアグルーヴ</option>
-					<option value="36">エアグルーヴ(ビューティー)</option>
+					<option value="36">エアグルーヴ(花嫁)</option>
 					<option value="14">エルコンドルパサー</option>
 					<option value="5">オグリキャップ</option>
 					<option value="31">カレンチャン</option>
@@ -154,6 +154,7 @@ div#right_contents div#rank_value{
 					<option value="1">スペシャルウィーク</option>
 					<option value="33">スマートファルコン</option>
 					<option value="17">スーパークリーク</option>
+					<option value="37">セイウンスカイ</option>
 					<option value="6">タイキシャトル</option>
 					<option value="12">ダイワスカーレット</option>
 					<option value="26">テイエムオペラオー</option>
@@ -163,10 +164,11 @@ div#right_contents div#rank_value{
 					<option value="32">ナリタタイシン</option>
 					<option value="34">ナリタブライアン</option>
 					<option value="22">ハルウララ</option>
+					<option value="38">ヒシアマゾン</option>
 					<option value="28">ビワハヤヒデ</option>
 					<option value="23">マチカネフクキタル</option>
 					<option value="16">マヤノトップガン</option>
-					<option value="35">マヤノトップガン(ビューティー)</option>
+					<option value="35">マヤノトップガン(花嫁)</option>
 					<option value="4">マルゼンスキー</option>
 					<option value="27">ミホノブルボン</option>
 					<option value="7">メジロマックイーン</option>
@@ -642,6 +644,28 @@ div#right_contents div#rank_value{
 			<tr>
 				<td class="skill_boxed_common"><img src="img/黄速度C.png">Shadow Break</td>
 				<td>最終コーナー以降で外から追い抜くと、怪物的な力で、速度を上げる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">アングリング×スキーミング</td>
+				<td>レース終盤のコーナーで先頭にいるとこれ幸いと加速力を上げる</td>
+				<td>継承</td>
+				<td>コモン</td>
+				<td>黄</td>
+				<td> </td>
+				<td> </td>
+				<td style="display: none;">加速度</td>
+				<td>180</td>
+			</tr>
+			<tr>
+				<td class="skill_boxed_common"><img src="img/黄速度C.png">タイマン！デッドヒート！</td>
+				<td>最終直線で後ろの方から外を回って追い抜く時、速度を上げる</td>
 				<td>継承</td>
 				<td>コモン</td>
 				<td>黄</td>
@@ -4146,7 +4170,7 @@ div#right_contents div#rank_value{
 				<td> </td>
 				<td> </td>
 				<td style="display: none;">回復</td>
-				<td>#N/A</td>
+				<td>-262</td>
 			</tr>
 			<tr>
 				<td class="skill_boxed_common"><img src="img/紫速度C.png">手抜き癖</td>
@@ -4477,11 +4501,17 @@ div#right_contents div#rank_value{
 		case 34://ナリタブライアン
                     document.getElementById("unique_skill_name").innerHTML = "Shadow Break"
                     break;
-		case 35://マヤノトップガン(ビューティー)
+		case 35://マヤノトップガン(花嫁)
                     document.getElementById("unique_skill_name").innerHTML = "フラワリー☆マニューバ"
                     break;
-		case 36://エアグルーヴ(ビューティー)
+		case 36://エアグルーヴ(花嫁)
                     document.getElementById("unique_skill_name").innerHTML = "薫風、永遠なる瞬間を"
+                    break;
+		case 37://セイウンスカイ
+                    document.getElementById("unique_skill_name").innerHTML = "アングリング×スキーミング"
+                    break;
+		case 38://ヒシアマゾン
+                    document.getElementById("unique_skill_name").innerHTML = "タイマン！デッドヒート！"
                     break;
                 default:
                     break;
